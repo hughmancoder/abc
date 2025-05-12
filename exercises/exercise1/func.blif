@@ -1,0 +1,6 @@
+.model func
+.inputs a b c
+.outputs f
+.names a b c f
+010 1
+.end
