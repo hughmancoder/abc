@@ -1,0 +1,29 @@
+ 
+# all input formats lead to the same results
+
+# Load a Verilog benchmark circuit
+# read_verilog EPFL/adder.v
+
+# OR load an AIGER file (binary AIG)
+# read EPFL/adder.aig
+
+# OR load a BLIF file
+read_blif EPFL/adder.blif
+
+# Structural hashing to convert logic to AIG
+strash
+
+# Transfer the AIG to ABC9 memory space
+&get
+
+# Technology mapping in ABC9 with k-feasible cuts (K=6) up to 6 inputs
+&if -K 6
+
+# Show mapped AIG stats in ABC9
+&ps
+
+# Transfer mapped network back to classic ABC memory
+&put
+
+# Show stats in ABC (original engine)
+ps

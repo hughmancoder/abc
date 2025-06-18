@@ -1,0 +1,8 @@
+.model f
+.inputs a b c
+.outputs F
+.names a b c F
+000 1
+001 1
+101 1
+.end

@@ -1,0 +1,20 @@
+.model miter
+.inputs a b
+.outputs diff
+
+# AND(a,b) → y1
+.names a b y1
+11 1
+
+# OR(a,b) → y2
+.names a b y2
+10 1
+01 1
+11 1
+
+# diff = y1 ⊕ y2
+.names y1 y2 diff
+10 1
+01 1
+
+.end

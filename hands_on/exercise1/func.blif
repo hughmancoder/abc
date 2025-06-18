@@ -2,5 +2,7 @@
 .inputs a b c
 .outputs f
 .names a b c f
-010 1
+100 1
+110 1
+001 1
 .end

@@ -1,0 +1,21 @@
+# script2.abc — use inside ABC with `source script2.abc` or `abc -f script2.abc`
+
+read_blif and2.blif
+print_stats
+
+read_blif or2.blif
+print_stats
+
+read_blif and2.blif
+strash
+sat
+
+#  Miter = “Difference Detector”
+read_blif miter.blif
+print_stats
+strash
+sat
+
+cec and2.blif or2.blif # fast yes/no equivalence check
+
+quit

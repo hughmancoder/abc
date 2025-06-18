@@ -1,0 +1,38 @@
+# 1) Load and check network
+read_blif f.blif
+print_stats
+
+# 2) Build and export BDD
+read_blif f.blif
+collapse # strash
+write_dot bdd.dot
+
+# 3) Reload, convert to SOP, and print
+read_blif f.blif
+print_factor -s
+# print_kmap
+sop
+
+read_blif f.blif
+strash
+write_dot mygraph.dot
+
+# Cofactor with c = 0, build BDD, export it
+read_blif f.blif           # reload original function
+cof c 0 
+print_factor -s
+sweep                      # eliminate logic that became constant
+collapse                   # build the BDD
+write_dot cof_c0.dot
+# sat
+
+read_blif f.blif
+cof c 1
+print_factor -s
+sweep # Remove constant or dead logic
+collapse # Turn remaining logic into BDDs
+write_dot cof_c1.dot # Export BDD(s) to Graphviz DOT format
+
+# generate pngs
+# dot -Tpng cof_c0.dot -o cof_c0.png
+# dot -Tpng cof_c1.dot -o cof_c1.png

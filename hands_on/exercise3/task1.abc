@@ -1,0 +1,14 @@
+# Usage: abc -f task1.abc
+read_verilog FA.v
+strash
+show
+rewrite # applies local rewrites to simplify subgraphs
+balance # rebalance the network
+ps # check the stats
+show # confirm the shrink (this may not work)
+
+# drite to dot file
+write_dot adder.dot
+
+# convert dot file to png
+# dot -Tpng adder.dot -o adder.png # (need to run seperately)
