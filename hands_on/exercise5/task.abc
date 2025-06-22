@@ -1,0 +1,2 @@
+# Usage: abc -f task.abc
+read adder.aig 

@@ -1,0 +1,19 @@
+# Usage: abc -f file.abc
+
+# load design lib (abc converts to GenLib)
+read_lib sclib_tigfet10_hpall_tt_0p70v_25c.lib
+
+# 6 input LUT mapping
+read adder.aig
+strash                              # ensure we're in AIG form
+if -K 6                             # map straight into 6-input LUTs
+ps
+write_blif  mapped_lut6.blif
+
+# 8 Input LUT mapping
+
+read adder.aig
+strash
+if -K 8
+ps
+write_blif  mapped_lut8.blif

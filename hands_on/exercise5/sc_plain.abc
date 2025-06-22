@@ -1,0 +1,16 @@
+# Usage: abc -f task1.abc
+read adder.aig
+
+# load design lib (abc converts to GenLib)
+read_lib sclib_tigfet10_hpall_tt_0p70v_25c.lib
+
+# standard cell 
+
+# cell-level area/delay optimisation
+map                                
+
+# size / delay report
+ps
+          
+# writes the mapping as a verilog file
+write_verilog  mapped_sc_plain.v

@@ -1,0 +1,36 @@
+I. Technology Mapping Using Standard Cell Libraries (SCL)
+
+1. Types of Libraries:
+- Genlib Format:
+  A simplified library format that resembles the information used during technology mapping. Each cell has one area value and one value for each rise and fall delay.
+
+- Liberty Format:
+  This file format is used for tasks where detailed descriptions of the cells are important. These descriptions are usually extracted using SPICE simulations and require significant effort to produce.
+  In the Liberty format, the header includes general information such as units, nominal temperature, and templates for power and delay.
+  For each output pin of a standard cell, the Boolean function (used for Boolean matching) and a detailed analysis of its power behavior (static and dynamic) and timing are provided.
+  The dynamic power and timing are specified using an 8x8 matrix depending on the input transition time and total output net capacitance (e.g., delay_template_8x8_12, power_template_8x8_12).
+  Since this level of detail is too fine-grained for technology mapping and abstraction layers are still used, ABC simplifies these values into the Genlib format.
+
+2. Standard Cell Technology Mapping in ABC:
+- To read the respective library, use the commands "read_genlib" and "read_lib".
+- To create a mapping and write it to a file, use the commands "map" and "write_verilog file.v".
+- In the generated file, you can observe a mapped netlist where the cells from your SCL are used with specific signals connected to their input and output pins.
+
+- Structural Bias:
+  - When reading in a library, ABC automatically creates supergates by combining single cells to generate a wider range of Boolean functions for matching.
+  - To use structural choices, use the command "dch". Try mapping a benchmark using "map" with and without "dch" and compare the results.
+
+II. Add-on for Technology Mapping into LUTs
+
+1. General:
+- When mapping into LUTs, a k-LUT can implement any Boolean function with k inputs. Use the command: "if -K k".
+- This means that Boolean matching is not necessary. Instead, the truth tables of the cuts selected during mapping are used directly.
+- In LUT mapping, a unit-delay and unit-area model is typically used, meaning that each LUT has delay and area equal to 1.
+
+2. Structural Bias in Technology Mapping:
+- Structural choices can also be applied in LUT mapping.
+- Additionally, decomposition techniques can be used to mitigate structural bias. Here, the network is first mapped into larger LUTs (greater than k), and then decomposed into k-LUTs.
+- During decomposition, the process is no longer tied to the AIG structure and can use other representations such as truth tables (TT), sum-of-products (SOP), or binary decision diagrams (BDD).
+- You can apply delay-oriented mapping using the command "if -K 8 -Z 6". This maps the circuit into 8-LUTs first and then decomposes them into 6-LUTs, often resulting in better delay.
+- Try this on different benchmarks and compare it with direct mapping into 6-LUTs using "if -K 6".
+
